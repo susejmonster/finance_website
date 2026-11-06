@@ -2,10 +2,10 @@ import { CategoryScale } from "chart.js";
 import Chart from "chart.js/auto";
 import React, { useState } from "react";
 import "../../global.css";
-import DashboardCards from "../components/ui/Dashboard.tsx";
-import Header from "../components/ui/Header.tsx";
-import Sidebar from "../components/ui/Sidebar.tsx";
-import TransactionModal from "../components/ui/TransactionModal.tsx";
+import DashboardCards from "../components/ui/Dashboard";
+import Header from "../components/ui/Header";
+import Sidebar from "../components/ui/Sidebar";
+import TransactionModal from "../components/ui/TransactionModal";
 import { useEmployeeData } from "../services/fetch.js";
 Chart.register(CategoryScale);
 
