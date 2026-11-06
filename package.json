@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/controller.js"
+    "start": "node src/api/components/component_1/controller.js"
   },
   "keywords": [],
   "author": "",
