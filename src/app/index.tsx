@@ -15,7 +15,7 @@ interface Employee {
   lastname: string;
   // ... other fields
 }
-
+//added something to triggr git
 interface TransactionFormData {
   amount: string;
   transactiondate: string;
@@ -60,15 +60,19 @@ export default function App() {
     // Safety check
     if (!currentUser) return alert("Please log in first.");
 
+    // Retrieve the token saved during login and use your Render API URL
+    const token = localStorage.getItem('userToken'); 
+    const API_URL = "https://finance-website-h7uo.onrender.com";
+
     try {
-      // 2. Use the dynamic employee ID in your fetch URL
-      const response = await fetch(`http://localhost:3000/eeid?employeeid=${currentUser.employeeid}`, {
+      const response = await fetch(`${API_URL}/eeid?employeeid=${currentUser.employeeid}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}` // <--- This clears the 401 Unauthorized error
         },
         body: JSON.stringify({
-          employeeid: currentUser.employeeid, // 3. Use the dynamic ID in the body
+          employeeid: currentUser.employeeid,
           amount: parseFloat(formData.amount),
           transactiondate: formData.transactiondate,
           description: formData.description,
