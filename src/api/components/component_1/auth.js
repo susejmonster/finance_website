@@ -60,14 +60,23 @@ app.post('/login', async (req, res) => {
         const isValid = manager.Validate(req.body);
         console.log("DID IT VALIDATE?:", isValid);
 
-        if (isValid==true) {
-            manager.AssignToken()
+        if (isValid === true) {
+            // Generate the JWT token using your secret key
+            // (Pass user info or req.body data into the token payload as needed)
+            const token = jwt.sign({ username: req.body.username }, SECRET_KEY, { expiresIn: '24h' });
+            
+            // Send the token back to the frontend
+            return res.status(200).json({ 
+                success: true, 
+                token: token, 
+                message: 'Logged in successfully' 
+            });
         } else {
-            res.status(401).send({ error: 'Invalid credentials' });
+            return res.status(401).json({ error: 'Invalid credentials' });
         }
     } catch (error) {
         console.error("Login Error Stack:", error); 
-        res.status(500).send({ error: error.message || 'Internal server error' });
+        return res.status(500).json({ error: error.message || 'Internal server error' });
     }
 });
 
