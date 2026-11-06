@@ -1,0 +1,35 @@
+services:
+  # 🛠 DEVELOPMENT ENVIRONMENT
+  # Run with: docker compose up expo-dev
+  expo-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081" # Metro bundler port
+    volumes:
+      - .:/app
+      - /app/node_modules # Prevents local node_modules from overwriting the container's
+    environment:
+      - NODE_ENV=development
+      # If you are testing on a physical iOS/Android device using the Expo Go app, 
+      # Metro needs to know your computer's local Wi-Fi IP address. 
+      # You can pass it in via your terminal like: HOST_IP=192.168.1.5 docker compose up expo-dev
+      - REACT_NATIVE_PACKAGER_HOSTNAME=${HOST_IP:-} 
+    develop:
+      watch:
+        - path: ./src
+          target: /app/src
+          action: sync
+        - path: ./package.json
+          action: rebuild
+  # 🚀 PRODUCTION WEB ENVIRONMENT
+  # Run with: docker compose up expo-prod -d
+  expo-prod:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80" # Maps the container's port 80 to your machine's port 8080
+    environment:
+      - NODE_ENV=production
